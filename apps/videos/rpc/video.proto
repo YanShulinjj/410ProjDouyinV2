@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package video;
+option go_package="./rpc";
+
+service Video {
+    rpc Get(VideoItemReq) returns (VideoItem) ;
+    rpc Gets(VideoReq) returns(VideoResp);
+    rpc PublishList(VideoPublishReq) returns (VideoPublishResp);
+    rpc Feeds(VideoFeedReq) returns(VideoFeedResp);
+    rpc Add(AddVideoReq) returns(AddVideoResp);
+}
+
+
+message VideoItem {
+    uint64 id = 1;
+    uint64 author_id = 2;
+    string play_url =3;
+    string cover_url = 4;
+    int64 create_time = 5;
+    int64 update_time = 6;
+}
+
+// 视频流
+message VideoFeedReq {
+    int64 latest_time = 1;   // 返回以latest_time(最新发布的时间) 的前N个视频
+}
+message VideoFeedResp {
+    repeated VideoItem videos = 1;
+}
+
+// 获取发布列表
+message VideoPublishReq {
+    uint64 user_id = 1;
+}
+message VideoPublishResp {
+    repeated VideoItem videos = 1;
+}
+// 获取发布列表
+
+// 获取单个视频
+message VideoItemReq {
+    uint64 video_id = 1;
+}
+
+// 获取一组视频
+message VideoReq {
+    string video_ids = 1;
+}
+
+message VideoResp {
+    repeated VideoItem videos = 1;
+}
+// 获取视频
+
+// 添加一个视频
+message AddVideoReq {
+    uint64 author_id = 1;
+    string play_url = 2;
+    string cover_url = 3;
+}
+
+message AddVideoResp {
+}

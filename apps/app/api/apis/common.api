@@ -1,0 +1,6 @@
+syntax = "v1"
+
+type Response {
+    StatusCode   int32  `json:"status_code"`    //0-成功，其它失败
+    Msg          string `json:"status_msg,omitempty"`
+}

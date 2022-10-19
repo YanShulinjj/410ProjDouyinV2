@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package comment;
+option go_package = "./rpc";
+
+service Comment {
+    rpc Get(CommentItemReq) returns (CommentItem) ;
+    rpc GetCommentNum(CommentNumReq) returns(CommentNumResp);
+    rpc Gets(CommentReq) returns(CommentResp);
+    rpc GetByPage(CommentPageReq) returns(CommentPageResp);
+    rpc Add(AddCommentReq) returns (AddCommentResp);
+    rpc Update(UpdateCommentReq) returns (UpdateCommentResp);
+    rpc Drop(DropCommentReq) returns (DropCommentResp);
+}
+
+message CommentItemReq {
+    uint64 comment_id = 1;
+}
+
+message CommentReq {
+    uint64 video_id = 1;
+}
+
+message CommentResp {
+    repeated CommentItem Comments = 1;
+}
+
+message CommentPageReq {
+    uint64 video_id = 1;
+    int64 cursor = 2;
+    int32 ps = 3;
+    int64 comment_id = 4;   // 该页的最后一个comment的id, 如果为0表示最后一页
+}
+
+message CommentPageResp {
+    bool is_end = 1;
+    int64 comment_id = 3;
+    repeated CommentItem comments = 4;
+}
+message CommentItem {
+    uint64 comment_id = 1;
+    uint64 user_id = 2;
+    uint64 video_id = 3;
+    string content = 4;
+    int64  create_time = 5;
+    int64  update_time = 6;
+}
+
+message AddCommentReq {
+    uint64 user_id = 1;
+    uint64 video_id = 2;
+    string content = 3;
+}
+
+message AddCommentResp {
+    uint64 comment_id = 1;
+}
+
+message UpdateCommentReq {
+    uint64 comment_id = 1;
+    string content = 2;
+}
+
+message UpdateCommentResp {
+}
+
+message DropCommentReq {
+    uint64 video_id = 1;
+    uint64 comment_id = 2;
+}
+
+message DropCommentResp {
+}
+
+// 获取评论数量
+message CommentNumReq {
+    uint64 video_id = 1;
+}
+message CommentNumResp {
+    uint64 nums = 2;
+}

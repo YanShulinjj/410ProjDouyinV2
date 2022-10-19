@@ -1,0 +1,52 @@
+Name: api-api
+Host: 0.0.0.0
+Port: 8888
+
+JwtAuth:
+  AccessSecret: uOvKLmVfztaXGpNYd4Z0I1SiT7MweJhl
+  AccessExpire: 86400
+
+UserRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc
+  NonBlock: true  #弱依赖，该rpc服务崩了，不会导致主服务崩
+
+VideoRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: video.rpc
+  NonBlock: true  #弱依赖，该rpc服务崩了，不会导致主服务崩
+
+CommentRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: comment.rpc
+  NonBlock: true  #弱依赖，该rpc服务崩了，不会导致主服务崩
+
+LikeRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: like.rpc
+  NonBlock: true  #弱依赖，该rpc服务崩了，不会导致主服务崩
+
+RelationRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: relation.rpc
+  NonBlock: true  #弱依赖，该rpc服务崩了，不会导致主服务崩
+
+MaxBytes: 104857600 # 100MB
+UseOSS: false
+OSSEndpoint: http://oss-cn-chengdu.aliyuncs.com
+AccessKeyID: XXXXXXXXXXXXXXXXXXXXXXX
+AccessKeySecret: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+FfmpegExecPath: ./bin/ffmpeg.exe
+
+ServerPath: http://192.168.137.1  # 使用本地文件服务

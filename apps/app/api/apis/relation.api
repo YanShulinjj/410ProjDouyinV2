@@ -1,0 +1,41 @@
+syntax = "v1"
+
+info(
+    title: "关系管理"
+    desc: "关系管理"
+    author: "suyame"
+    email: "1935971904@qq.com"
+    version: "v1"
+)
+import (
+    "apis/user.api"
+)
+
+type (
+
+    RelationResponse {
+        StatusCode   int32  `json:"status_code"`    //0-成功，其它失败
+        Msg          string `json:"status_msg,omitempty"`
+    }
+    // 获取followlist
+    FollowListReq {
+        UserId uint64 `form:"user_id"`
+        Token  string `form:"token"`
+    }
+    FollowListResp {
+        RelationResponse
+        Users []*UserInfo `json:"user_list"`
+    }
+        // 获取followlist
+
+        // 获取followerlist
+    FollowerListReq {
+        UserId uint64 `form:"user_id"`
+        Token  string `form:"token"`
+    }
+    FollowerListResp {
+        RelationResponse
+        Users []*UserInfo `json:"user_list"`
+    }
+    // 获取followerlist
+)

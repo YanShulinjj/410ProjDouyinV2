@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package relation;
+option go_package="./rpc";
+
+service Relation {
+  rpc GetFollowList(User) returns (FollowList);
+  rpc GetFollowerList(User) returns (FollowerList);
+  rpc IsFollow(IsFollowReq) returns (IsFollowResp);
+  rpc Follow(FollowReq) returns (FollowResp) ;
+  rpc FollowCount(User) returns (UserCount);
+  rpc FollowerCount(User) returns (UserCount);
+  rpc CancelFollow(CancelFollowReq) returns(CancelFollowResp);
+}
+
+
+message Users {
+  string user_ids  = 1;                  //用户ID
+}
+message UserCount {
+  uint64 count = 1;
+}
+
+message User {
+  uint64  user_id = 1;
+}
+// 粉丝列表
+message FollowerList {
+  Users followers = 1;
+}
+// 关注列表
+message FollowList {
+  Users follows = 1;
+}
+
+// 关注
+message FollowReq {
+  uint64 user_id = 1;
+  uint64 to_user_id = 2;
+}
+
+message FollowResp {
+}
+
+// 取消关注
+message CancelFollowReq {
+  uint64 user_id = 1;
+  uint64 to_user_id = 2;
+}
+
+message CancelFollowResp {
+}
+
+// 是否关注
+message IsFollowReq {
+  uint64 user_id = 1;
+  uint64 to_user_id = 2;
+}
+
+message IsFollowResp {
+  bool is_follow = 1;
+}

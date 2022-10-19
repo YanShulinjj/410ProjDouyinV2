@@ -1,0 +1,65 @@
+syntax = "v1"
+
+info(
+    title: "评论管理"
+    desc: "评论管理"
+    author: "suyame"
+    email: "1935971904@qq.com"
+    version: "v1"
+)
+import (
+    "apis/user.api"
+)
+type (
+    CommentResponse {
+        StatusCode   int32  `json:"status_code"`    //0-成功，其它失败
+        Msg          string `json:"status_msg,omitempty"`
+
+    }
+    CommentInfo {
+        Id         uint64   `json:"id"`          //评论ID
+        User       UserInfo `json:"user"`        //用户
+        Content    string   `json:"content"`       //用户名
+        CreateDate string   `json:"create_date"` //创建时间
+    }
+
+    // 添加评论
+    AddCommentReq {
+//        UserId     uint64   `form:"user_id"`
+        Token      string   `form:"token"`
+        VideoId    uint64   `form:"video_id"`
+        ActionType int32    `form:"action_type"`
+        Comment    string   `form:"comment_text"`
+        Comment_id uint64   `form:"comment_id, optional"`
+    }
+
+    AddCommentResp {
+        CommentResponse
+        Comment CommentInfo `json:"comment"`
+    }
+    // 添加评论
+
+    // 删除评论
+    DropCommentReq {
+        Id  uint64 `form:"comment_id"`
+    }
+
+    DropCommentResp {
+        CommentResponse
+    }
+    // 删除评论
+
+    // 获取视频评论列表
+    VideoCommentListReq {
+        Token   string    `form:"token"`
+        VideoId uint64    `form:"video_id"`
+    }
+
+    VideoCommentListResp {
+        CommentResponse
+        Comments []*CommentInfo `json:"comment_list"`
+    }
+    // 获取视频评论列表
+)
+
+

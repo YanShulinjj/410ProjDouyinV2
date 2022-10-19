@@ -1,0 +1,135 @@
+syntax = "v1"
+
+import (
+	"apis/user.api"
+	"apis/comment.api"
+	"apis/video.api"
+	"apis/like.api"
+	"apis/relation.api"
+)
+
+//========================> user v1 <===================================
+//no need login
+@server(
+	prefix: douyin/user
+	group: user
+)
+service api-api {
+	@doc "login"
+	@handler login
+	post /login (LoginReq) returns (LoginResp)
+	
+	@doc "register"
+	@handler register
+	post /register (RegisterReq) returns (RegisterResp)
+	
+}
+
+//need login
+@server (
+	prefix: douyin/user
+	group: user
+	middleware: Jwt
+)
+
+service api-api {
+	@doc "userinfo"
+	@handler userinfo
+	get /  (UserInfoReq) returns (UserInfoResp)
+}
+
+//========================> comment v1 <===================================
+//no need login
+@server(
+	prefix: douyin/comment
+	group: comment
+)
+service api-api {
+	@doc "get comment list"
+	@handler commentList
+	get /list (VideoCommentListReq) returns (VideoCommentListResp)
+}
+
+//need login
+@server(
+	prefix: douyin/comment
+	group: comment
+	//	jwt: JwtAuth //use jwt
+	middleware: Jwt
+)
+service api-api {
+	@doc "add comment"
+	@handler addComment
+	post /action (AddCommentReq) returns (AddCommentResp)
+}
+
+//========================> video v1 <===================================
+//no need login
+@server(
+	prefix: douyin
+	group: video
+)
+service api-api {
+	@doc "get videos "
+	@handler feed
+	get /feed (VideoFeedReq) returns (VideoFeedResp)
+}
+
+//need login
+@server(
+	prefix: douyin/publish
+	group: video
+	//	jwt: JwtAuth //use jwt
+	middleware: Jwt
+)
+service api-api {
+	@doc " user add video"
+	@handler add
+	post /action (AddVideoReq) returns (AddVideoResp)
+	
+	@doc " user publish list"
+	@handler publishlit
+	get /list (VideoListReq) returns (PublishVideoListResp)
+}
+
+//========================> like v1 <===================================
+// need login
+@server(
+	prefix: douyin/favorite
+	group: favorite
+	//	jwt: JwtAuth //use jwt
+	middleware: Jwt
+)
+service api-api {
+	@doc "like video"
+	@handler like
+	post /action (ActionLikeReq) returns (ActionLikeResp)
+	
+	@doc " user publish list"
+	@handler likelist
+	get /list (VideoListReq) returns (LikeVideoListResp)
+	
+}
+
+//========================> relation v1 <===================================
+// need login
+@server(
+	prefix: douyin/relation
+	group: relation
+	//	jwt: JwtAuth //use jwt
+	middleware: Jwt
+)
+service api-api {
+	@doc "action relation"
+	@handler action
+	post /action (ActionRelationReq) returns (ActionRelationResp)
+	
+	@doc " follow list"
+	@handler followlist
+	get /follow/list (FollowListReq) returns (FollowListResp)
+	
+	@doc " follower list"
+	@handler followerlist
+	get /follower/list (FollowerListReq) returns (FollowerListResp)
+	
+}

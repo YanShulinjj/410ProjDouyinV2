@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package like;
+option go_package="./rpc";
+
+service Like {
+  rpc GetLikeList(User) returns (LikeList);
+  rpc GetLikeNum(LikeNumReq) returns (LikeNumResp);
+  rpc IsLike(IsLikeReq) returns (IsLikeResp);
+  rpc LikeVideo(LikeVideoReq) returns (LikeVideoResp);
+  rpc CancelLikeVideo(CancelLikeVideoReq) returns (CancelLikeVideoResp);
+}
+
+
+message User {
+  uint64  user_id = 1;
+}
+// 喜欢列表
+message LikeList {
+  string video_ids = 1;
+}
+// 点赞视频
+message LikeVideoReq {
+  uint64  user_id = 1;
+  uint64  video_id = 2;
+}
+message LikeVideoResp {
+}
+// 取消点赞
+message CancelLikeVideoReq {
+  uint64  user_id = 1;
+  uint64  video_id = 2;
+}
+message CancelLikeVideoResp {
+}
+
+// 获得指定视频的喜欢数量
+message LikeNumReq {
+  uint64 video_id = 1;
+}
+
+message LikeNumResp {
+  uint64 nums = 1;
+}
+
+// 是否已经点赞
+message IsLikeReq {
+  uint64 user_id = 1;
+  uint64 video_id = 2;
+}
+message IsLikeResp {
+  bool is_like = 1;
+}

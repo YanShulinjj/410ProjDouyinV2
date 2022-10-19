@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package user;
+option go_package="./rpc";
+
+service User {
+    rpc Get(UserItemReq) returns (UserItem);
+    rpc Gets(UserReq) returns (UserResp);
+    rpc Register(AddUserReq) returns (AddUserResp) ;
+    rpc Login(UserLoginReq) returns(UserLoginResp);
+    rpc Update(UpdateUserReq) returns(UpdateUserResp);
+}
+
+
+message UserItem {
+    uint64 user_id  = 1;                  //用户ID
+    string user_name = 2;            //用户名
+    string password = 3;             //用户密码，MD5加密
+    int64 create_time = 4;            //创建时间
+    int64 update_time = 5;            //更新时间
+}
+
+
+// 获取指定用户
+message UserItemReq {
+    uint64 user_id = 1;
+}
+
+// 获取一组用户
+message UserReq {
+    string user_ids = 1;
+}
+
+message UserResp {
+    map<uint64, UserItem> users = 1;
+}
+// 获取用户
+
+// 添加用户（用户注册）
+message AddUserReq {
+    string user_name = 1;            //用户名
+    string password = 2;             //用户密码，MD5加密
+}
+
+message AddUserResp {
+    uint64 user_id = 1;              // 用户id
+}
+
+// 用户登陆（验证）
+message UserLoginReq {
+    string user_name = 1;            //用户名
+    string password = 2;             //用户密码，MD5加密
+}
+
+message UserLoginResp {
+    uint64 user_id = 1;              // 用户id
+}
+
+// 更新用户(更改密码等）
+message UpdateUserReq {
+    string user_name = 1;               //用户名
+    string oldpassword = 2;
+    string newpassword = 3;             //用户密码，MD5加密
+}
+
+message UpdateUserResp {
+}

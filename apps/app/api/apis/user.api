@@ -1,0 +1,67 @@
+syntax = "v1"
+
+info(
+    title: "用户管理"
+    desc: "用户管理"
+    author: "suyame"
+    email: "1935971904@qq.com"
+    version: "v1"
+)
+
+
+type (
+    UserResponse {
+        StatusCode   int32  `json:"status_code"`    //0-成功，其它失败
+        Msg          string `json:"status_msg,omitempty"`
+
+    }
+
+    UserInfo {
+        Id         uint64 `json:"id"`          //用户ID
+        Username   string `json:"name"`        //用户名
+                                               //    Password   string `form:"password"`    //用户密码，MD5加密
+        IsFollow   bool   `json:"is_follow"`
+        FollowCount int64 `json:"follow_count"`
+        FollowerCount int64 `json:"follower_count"`
+    }
+
+    // 用户注册
+    RegisterReq {
+        Username string `form:"username"`
+        Password string `form:"password"`
+    }
+    RegisterResp {
+        UserResponse
+        UserId       uint64 `json:"user_id"`
+        Token        string `json:"token"`
+    }
+    // 用户注册
+
+    //用户登陆
+    LoginReq {
+        Username string `form:"username"`
+        Password string `form:"password"`
+    }
+
+    LoginResp {
+        UserResponse
+        UserId       uint64 `json:"user_id"`
+        Token  string `json:"token"`
+    }
+    //用户登陆
+
+
+    //用户详情
+    UserInfoReq {
+        UserId  uint64 `form:"user_id"`
+        Token   string `form:"token"`
+    }
+    UserInfoResp {
+        UserResponse
+        UserInfo     UserInfo `json:"user"`
+    }
+    //用户详情
+)
+
+
+

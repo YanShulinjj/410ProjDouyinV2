@@ -1,0 +1,38 @@
+syntax = "v1"
+
+info(
+    title: "点赞管理"
+    desc: "点赞管理"
+    author: "suyame"
+    email: "1935971904@qq.com"
+    version: "v1"
+)
+
+
+type (
+    LikeResponse {
+    StatusCode   int32  `json:"status_code"`    //0-成功，其它失败
+    Msg          string `json:"status_msg,omitempty"`
+    }
+    // 点赞action
+    ActionLikeReq {
+        Token      string `form:"token"`
+        VideoId    uint64 `form:"video_id"`
+        ActionType uint8  `form:"action_type"` // 0-点赞，1-取消点赞
+    }
+    ActionLikeResp {
+        LikeResponse
+    }
+    // 点赞action
+
+    // 关注action
+    ActionRelationReq {
+        ActionType uint8  `form:"action_type"` // 1-关注，2-取消关注
+        Token      string `form:"token"`
+        ToUserId   uint64 `form:"to_user_id"`
+    }
+    ActionRelationResp {
+        LikeResponse
+    }
+    // 关注action
+)

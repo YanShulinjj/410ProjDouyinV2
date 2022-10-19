@@ -1,0 +1,78 @@
+syntax = "v1"
+
+info(
+    title: "视频管理"
+    desc: "视频管理"
+    author: "suyame"
+    email: "1935971904@qq.com"
+    version: "v1"
+)
+import (
+    "apis/user.api"
+)
+
+type (
+    VideoResponse {
+        StatusCode   int32  `json:"status_code"`    //0-成功，其它失败
+        Msg          string `json:"status_msg,omitempty"`
+    }
+    VideoItem {
+        Id            uint64   `json:"id"`       //评论ID
+        User          UserInfo `json:"author"`         //用户ID
+        PlayURL       string   `json:"play_url"`       //视频ID
+        CoverURL      string   `json:"cover_url"`      //用户名
+        FavoriteCount string   `json:"favorite_count"` // 该视频点赞数量
+        CommentCount  string   `json:"comment_count"`   // 该视频评论数量
+        CreateTime    int64    `json:"create_time"`    //创建时间
+        UpdateTime    int64    `json:"update_time"`    //更新时间
+        IsLike        bool     `json:"is_favorite"`    // 是否点赞（针对当前登录用户）
+    }
+
+    // 添加视频
+    AddVideoReq {
+        Token      string `form:"token"`
+        Title      string `form:"title,omitempty"`
+    }
+    AddVideoResp {
+        VideoResponse
+    }
+    // 添加视频
+
+    // 删除视频
+    DropVideoReq {
+        Id  uint64     `form:"video_id"`
+    }
+
+    DropVideoResp {
+        VideoResponse
+    }
+    // 删除视频
+
+    // 视频流
+    VideoFeedReq {
+        Latest_time int64  `form:"latest_time,omitempty"`
+        Token       string `form:"token,omitempty"`
+    }
+
+    VideoFeedResp {
+        VideoResponse
+        Videos   []*VideoItem `json:"video_list,omitempty"`
+        NextTime int64        `json:"next_time,omitempty"`
+    }
+    // 视频流
+
+    // 视频列表
+    VideoListReq {
+        UserId uint64 `form:"user_id"`
+        Token  string `form:"token"`
+    }
+    PublishVideoListResp {
+        VideoResponse
+        Videos []*VideoItem `json:"video_list, omitempty"`
+    }
+    LikeVideoListResp {
+        VideoResponse
+        Videos []*VideoItem `json:"video_list, omitempty"`
+    }
+    // 视频列表
+)
